@@ -39,6 +39,8 @@ namespace checkstore {
     public:
         explicit LocalStorageEngine(const std::filesystem::path& root_path);
         // ... 实现上述虚函数
+    private:
+        std::filesystem::path root_path_;
     };
 
 } // namespace checkstore

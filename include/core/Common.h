@@ -44,5 +44,15 @@ namespace checkstore {
         T value;                    // 成功时的返回值
     };
 
+    // 辅助函数：枚举转字符串
+    std::string to_string(CompressionStrategy strategy);
+    std::string to_string(CheckpointStatus status);
+    CheckpointStatus from_string(const std::string& str);
+
+    // JSON 序列化支持 (需要 nlohmann/json)
+    #include <nlohmann/json.hpp>
+    void to_json(nlohmann::json& j, const SafetensorsFileInfo& info);
+    void from_json(const nlohmann::json& j, SafetensorsFileInfo& info);
+
 } // namespace checkstore
 #endif

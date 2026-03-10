@@ -19,6 +19,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # 查找依赖 (示例)
 find_package(spdlog CONFIG REQUIRED) # 用于日志
 find_package(cxxopts CONFIG REQUIRED) # 用于 CLI 参数解析
+find_package(yaml-cpp CONFIG REQUIRED) # 用于配置文件解析
+find_package(nlohmann_json CONFIG REQUIRED) # 用于JSON序列化
+find_package(OpenSSL REQUIRED) # 用于MD5计算
 # find_package(SQLite3 REQUIRED) # 未来用于 Metadata Service
 
 # 包含目录
@@ -33,11 +36,10 @@ add_library(checkstore_core STATIC
     src/core/DependencyGraph.cpp
     src/core/CompressionScheduler.cpp
     src/core/IntegrityVerifier.cpp
-    src/core/GarbageCollector.cpp
-    src/core/MetadataService.cpp
+    src/core/Common.cpp
     src/core/MainDaemon.cpp
 )
-target_link_libraries(checkstore_core PRIVATE spdlog::spdlog) # 链接日志库
+target_link_libraries(checkstore_core PRIVATE spdlog::spdlog yaml-cpp nlohmann_json::nlohmann_json OpenSSL::Crypto) # 链接日志库
 
 # 守护进程可执行文件
 add_executable(checkstored src/main.cpp)
